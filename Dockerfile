@@ -9,10 +9,10 @@ RUN apt-get update && \
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Copy your application code to Apache web root
+# Copy application code to Apache web root
 COPY . /var/www/html/
 
-# Set correct permissions
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html
 
 # Expose port 80
