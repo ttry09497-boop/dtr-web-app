@@ -1,18 +1,12 @@
 <?php
-$host = 'localhost';
-$db   = 'tables_db';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+$host = getenv('POSTGRES_HOST');
+$port = getenv('POSTGRES_PORT');
+$db   = getenv('POSTGRES_DB');
+$user = getenv('POSTGRES_USER');
+$pass = getenv('POSTGRES_PASSWORD');
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-  PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-
-try {
-  $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-  die("Database connection failed: " . $e->getMessage());
-}
+$dsn = "pgsql:host=$host;port=$port;dbname=$db;sslmode=require";
+$pdo = new PDO($dsn, $user, $pass, [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+]);
